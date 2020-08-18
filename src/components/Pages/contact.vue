@@ -17,7 +17,6 @@
 										<p>About Weather Nepal. <br>
 										Kathmandu, Nepal</p>
 									</address>
-									
 									<p><img src="@/assets/images/icon-phone.png" alt="About weather Nepal Contact Number">&nbsp;&nbsp;&nbsp;+977 9867278173</p>
 									<p><img src="@/assets/images/icon-envelope.png" alt="About weather Nepal Email address">&nbsp;&nbsp;&nbsp;arjun.ghimire8386@gmail.com</p>
 								</div>
@@ -25,27 +24,116 @@
 						</div>
 						<div class="col-md-6 col-md-offset-1">
 							<h2 class="section-title">Contact us</h2>
-							<form action="#" class="contact-form">
+							<div class="alert" v-if="isError">
+								<strong><p>Please check your input.<br>
+								Name must be valid and must be entered,<br>
+								Email id must be valid and must be entered,<br>
+								Phone number must be valid,10digit and must be entered,<br>
+								Message must be entered.</p></strong>
+							</div>
+							
+							<div class="contact-form">
 								<div class="row">
-									<div class="col-md-6"><input type="text" placeholder="Your name..."></div>
-									<div class="col-md-6"><input type="text" placeholder="Email Addresss..."></div>
+									<div class="col-md-6"><input  type="text" v-model="contactUs.name" placeholder="Your name..."></div>
+									<div class="col-md-6"><input v-model="contactUs.emailId" type="email" placeholder="Email Addresss..."></div>
 								</div>
 								<div class="row">
-									<div class="col-md-6"><input type="text" placeholder="Phone Number..."></div>
+									<div class="col-md-6"><input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" maxlength=10 v-model="contactUs.phoneNumber" placeholder="Phone Number..."></div>
 								</div>
-								<textarea name="" placeholder="Message..."></textarea>
+								<textarea name="" placeholder="Message..." v-model="contactUs.message"></textarea>
+								<div class="alert2" v-if="submited">
+									<strong><p>Thank you for your query.<br>
+									</p></strong>
+									<br>
+								</div>
+								<br>
 								<div class="text-right">
-									<input type="submit" value="Send message">
+									<button type="button" v-on:click="submitContact" class="btn btn-success">Primary</button>
 								</div>
-							</form>
-
+							</div>
 						</div>
 					</div>
 				</div>
 			</main> <!-- .main-content -->
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     name: 'Contact',
+	data(){
+		return{
+			contactUs : {
+				name: '',
+				emailId: '',
+				phoneNumber: '',
+				message: ''
+			},
+			isError: false,
+			submited: false
+		}
+	},
+	methods:{
+		validateContact(){
+			var errMsg = '';
+			if(this.contactUs.name == ''){ errMsg += 'Invalid name' }
+			if(!this.contactUs.emailId.includes('@') || !this.contactUs.emailId.includes('.com')){ errMsg += 'Invalid email' }
+			if(this.contactUs.phoneNumber.length != 10){ errMsg += 'Invalid phone number' }
+			if(this.contactUs.message == ''){ errMsg += 'Invalid Message' }
+			if(errMsg == ''){
+				return true;
+			}else{
+				this.isError = true;
+				return false;
+			}
+		},
+		submitContact(){
+			this.submited = false
+			if(this.validateContact()){
+				this.isError = false
+				 axios.post(`http://localhost:3000/contacts`,
+				 	this.contactUs)
+					.then(response => {
+						if(response.status == 200 && response.statusText == 'OK'){
+							this.contactUs.name= ''
+							this.contactUs.emailId= ''
+							this.contactUs.phoneNumber= ''
+							this.contactUs.message= ''
+							this.submited = true
+						}
+					})
+					.catch(e => {
+						console.log(e);
+				})
+			}
+		},
+	}
 }
 </script>
+
+<style scoped>
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+.alert2 {
+  padding: 20px;
+  background-color: green;
+  color: white;
+}
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>

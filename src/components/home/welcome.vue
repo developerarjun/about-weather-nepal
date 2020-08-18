@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="hero" data-bg-image="@/assets/images/everest-tkelly.jpeg">
+    <div class="hero">
         <div class="container">
             <form action="#" class="find-location">
                 <input type="text" placeholder="Find your location...">
@@ -17,7 +17,7 @@
                         <div class="date">6 Oct</div>
                     </div> <!-- .forecast-header -->
                     <div class="forecast-content">
-                        <div class="location">New York</div>
+                        <div class="location">Kathmandu</div>
                         <div class="degree">
                             <div class="num">23<sup>o</sup>C</div>
                             <div class="forecast-icon">

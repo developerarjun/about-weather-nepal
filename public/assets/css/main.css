@@ -1199,6 +1199,7 @@
  .hero {
    background-size: cover;
    padding: 70px 0;
+   background-image: url("../images/everest-tkelly.jpeg");
    min-height: 350px; }
  
  .find-location {
