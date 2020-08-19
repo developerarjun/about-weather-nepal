@@ -91,7 +91,7 @@ export default {
 			this.submited = false
 			if(this.validateContact()){
 				this.isError = false
-				 axios.post(`http://localhost:3000/contacts`,
+				 axios.post(`https://about-nepal-weather.herokuapp.com/contacts`,
 				 	this.contactUs)
 					.then(response => {
 						if(response.status == 200 && response.statusText == 'OK'){
