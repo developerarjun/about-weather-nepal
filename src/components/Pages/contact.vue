@@ -48,7 +48,8 @@
 								</div>
 								<br>
 								<div class="text-right">
-									<button type="button" v-on:click="submitContact" class="btn btn-success">Send Message</button>
+									<p v-if="sending">Sending, please wait....</p>
+									<button type="button" v-on:click="submitContact" class="btn btn-success" :disabled='sending'>Send Message</button>
 								</div>
 							</div>
 						</div>
@@ -70,7 +71,8 @@ export default {
 				message: ''
 			},
 			isError: false,
-			submited: false
+			submited: false,
+			sending: false
 		}
 	},
 	methods:{
@@ -81,6 +83,7 @@ export default {
 			if(this.contactUs.phoneNumber.length != 10){ errMsg += 'Invalid phone number' }
 			if(this.contactUs.message == ''){ errMsg += 'Invalid Message' }
 			if(errMsg == ''){
+				this.sending = true
 				return true;
 			}else{
 				this.isError = true;
@@ -100,6 +103,7 @@ export default {
 							this.contactUs.phoneNumber= ''
 							this.contactUs.message= ''
 							this.submited = true
+							this.sending = false
 						}
 					})
 					.catch(e => {
