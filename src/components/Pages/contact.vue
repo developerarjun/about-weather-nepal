@@ -48,7 +48,7 @@
 								</div>
 								<br>
 								<div class="text-right">
-									<button type="button" v-on:click="submitContact" class="btn btn-success">Primary</button>
+									<button type="button" v-on:click="submitContact" class="btn btn-success">Send Message</button>
 								</div>
 							</div>
 						</div>
