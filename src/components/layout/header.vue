@@ -11,11 +11,12 @@
 					<!-- Default snippet for navigation -->
 					<div class="main-navigation">
 						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						
 						<ul class="menu">
 							<router-link tag="li" class="menu-item"  active-class="current-menu-item" to="/"><a>Home</a></router-link>
 							<router-link tag="li"  class="menu-item"  active-class="current-menu-item" to="/contact"><a>Contact</a></router-link>
-						</ul> <!-- .menu -->
-					</div> <!-- .main-navigation -->
+						</ul>
+					</div>
 					<div class="mobile-navigation"></div>
 				</div>
 			</div> 
